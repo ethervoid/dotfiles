@@ -1,85 +1,294 @@
 set nocompatible      " Don't force vi compatibility
 behave xterm          " Alternative is "mswin"
+
 set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
-set cf  " Enable error files & error jumping.
-set clipboard+=unnamed  " Yanks go on clipboard instead.
-set history=256  " Number of things to remember in history.
-set autowrite  " Writes on make/shell commands
-set ruler  " Ruler on
-set nu  " Line numbers on
-set nowrap  " Line wrapping off
-set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
-set guifont=Monaco\ for\ Powerline
 
-" Formatting (some of these are for coding in C and C++)
-set ts=4  " Tabs are 2 spaces
-set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
-set nocp incsearch
-set cinoptions=:0,p0,t0
-set cinwords=if,else,while,do,for,switch,case
-set formatoptions=tcqr
-set cindent
-set smartindent
-set smarttab
-set expandtab
-set t_Co=256
+" Basic config {{{ -------------------------------------------------------
 
-" Visual
-set showmatch  " Show matching brackets.
-set mat=5  " Bracket blinking.
-set list
-set novisualbell  " No blinking .
-set noerrorbells  " No noise.
+  scriptencoding utf-8
+  set encoding=utf-8              " Encoding to UTF-8.
+  set ls=2                        " Status bar always visible
+  set go-=T                       " No tools.
+  set go-=m                       " No menu.
+  set go+=rRlLbh                  " Scroll bars enabled.
+  set go-=rRlLbh                  " Desactiva todas las barras de desplazamiento.
+  set cursorline                  " Cursor line highlighted.
+  set fillchars+=vert:│           " Mejora aspecto de la división de ventanas.
+  set ttyfast                     " Mejora el redibujado de la pantalla.
+  set title                       " Filename as title in the term.
+  set showcmd                     " Show incompleted commands.
+  set hidden                      " Hidden closed buffers.
+  set ruler                       " Show a permanent ruler.
+  set lazyredraw                  " Redraw in lazy mode.
+  set autoread                    " Update the changes out of vim.
+  set ttimeoutlen=0               " No delay while change modes
+  set backspace=indent,eol,start  " Backspace key behavior
+  set nu                          " Line numbers on
+  set cf                          " Enable error files & error jumping.
 
-" gvim specific
-set mousehide  " Hide mouse after chars typed
+" }}}
 
-" Backups & Files
-set backup                     " Enable creation of backup file.
-set backupdir=~/.vim/backups/ " Where backups will go.
-set directory=~/.vim/tmp/     " Where temporary files will go.
-set mouse=a  " Mouse in all modes
-set nohidden
-set laststatus=2
-" RVM
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
+" Search config {{{
+
+  set incsearch                   " Incremental search.
+  set showmatch                   " Show parenthesis match.
+  set hlsearch                    " Search results highlighted.
+  set smartcase                   " Smart case sensitive.
+  set ignorecase                  " No case sensitive while searching.
+
+" }}}
+
+" History and undo {{{
+
+  set history=1000
+  set undofile
+  set undoreload=1000
+
+" }}}
+
+" Wildmenu {{{ ---------------------------------------------------------------
+
+  set wildmenu                        " Commandline autocomple.
+  set wildmode=list:longest,full      " Show a list with all the options.
+
+  set wildignore+=.hg,.git,.svn                    " Version control
+  set wildignore+=*.sw?                            " Vim swap files
+  set wildignore+=*.bak,*.?~,*.??~,*.???~,*.~      " Backup files
+  set wildignore+=*.luac                           " Lua byte code
+  set wildignore+=*.jar                            " java archives
+  set wildignore+=*.pyc                            " Python byte code
+  set wildignore+=*.stats                          " Pylint stats
+
+" }}}
+
+" Tabs, spaces and wrapping {{{ -----------------------------------------
+
+  set expandtab                  " Emplea espacios en vez de tabulados.
+  set tabstop=4                  " Un Tabulado son cuatro espacios.
+  set shiftwidth=4               " Numero de espacios para autoindentado.
+  set softtabstop=4              " Un Tabulado de cuatro espacios.
+  set autoindent                 " Establece el autoindentado.
+  set textwidth=80
+  set colorcolumn=+1
+
+" }}}
+
+" Visual config {{{{
+
+  set showmatch  " Show matching brackets.
+  set mat=5  " Bracket blinking.
+  set list
+  set novisualbell  " No blinking .
+  set noerrorbells  " No noise.
+
+" }}}}
+
+" Esquema de color {{{
+
+  syntax on                      " Habilita el resaltado de sintaxis.
+  set background=dark            " Establece el fondo oscuro.
+  set t_Co=256                   " Habilita 256 colores en modo consola.
+  if has('gui_running')          " Habilita el tema molokai para gvim y vim.
+      colorscheme molokai
+  else
+      colorscheme molokai256
+  endif
+  set guifont=Monaco\ for\ Powerline
+  
+" }}}
+
+" gvim specific {{{
+  
+  set mousehide  " Hide mouse after chars typed
+  set mouse=a  " Mouse in all modes
+  set nohidden
+
+" }}}
+
+" Crear directorio si no existe previamente {{{
+
+  function! MakeDirIfNoExists(path)
+      if !isdirectory(expand(a:path))
+          call mkdir(expand(a:path), "p")
+      endif
+  endfunction
+
+" }}}
+
+" Backup config {{{ 
+
+  set backup
+  set nohidden
+  set backupdir=$HOME/.vim/tmp/backup/
+  set undodir=$HOME/.vim/tmp/undo/
+  set directory=$HOME/.vim/tmp/swap/
+  set viminfo+=n$HOME/.vim/tmp/viminfo
+
+  " If dirs doest not existe we have to create them
+  silent! call MakeDirIfNoExists(&undodir)
+  silent! call MakeDirIfNoExists(&backupdir)
+  silent! call MakeDirIfNoExists(&directory)
+
+" }}}
 
 let mapleader = ","
 
-" Vundle Config
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" Init Vundle
-Bundle 'gmarik/vundle'
-" My Bundles
-Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/surround.vim'
-Bundle 'wicent/Command-T'
-Bundle 'hallettj/jslint.vim'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/guicolorscheme.vim'
-Bundle 'tpope/vim-rails'
-Bundle 'klen/python-mode'
-Bundle 'davidhalter/jedi-vim'
+" Autoinstall of NeoBundle {{{
+
+  let iCanHazNeoBundle=1
+  let neobundle_readme=expand($HOME.'/.vim/bundle/neobundle.vim/README.md')
+  if !filereadable(neobundle_readme)
+      echo "Installing NeoBundle.."
+      echo ""
+      silent !mkdir -p $HOME/.vim/bundle
+      silent !git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
+      let iCanHazNeoBundle=0
+  endif
+
+  " Call NeoBundle
+  if has('vim_starting')
+      set rtp+=$HOME/.vim/bundle/neobundle.vim/
+  endif
+  call neobundle#rc(expand($HOME.'/.vim/bundle/'))
+
+  NeoBundle 'Shougo/neobundle.vim'
+
+" }}}
+
+" BUNDLES (Install of plugins using NeoBundle) {{{
+
+" Vimproc async commands (NeoBundle, Unite)
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ }
+" Filesystem {{{
+  
+  NeoBundle 'kien/ctrlp.vim'
+
+" }}} 
+
+" DCVS {{{
+
+  " Git commands in vim
+  NeoBundle 'tpope/vim-fugitive'
+  " Diff of changes against git repo
+  NeoBundle 'airblade/vim-gitgutter'
+  " Git view
+  NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'],
+              \ 'autoload':{'commands':'Gitv'}}
+
+" }}}
+
+" Markdown {{{
+
+  " Markdown syntax
+  NeoBundleLazy 'joedicastro/vim-markdown'
+  " Preview of markdown in browser
+  NeoBundleLazy 'joedicastro/vim-markdown-extra-preview'
+
+" }}}
+
+" Linux utils {{{
+
+  " Diff between dirs
+  NeoBundleLazy 'joedicastro/DirDiff.vim', { 'autoload': { 'commands' : 'DirDiff'}}
+  " Hex edit
+  NeoBundleLazy 'vim-scripts/hexman.vim', { 'autoload' :
+              \ { 'mappings' : [['ni', '<Plug>HexManager']]}}
+
+" }}}
+
+" Python {{{
+
+  " Autocomplete
+  NeoBundle 'Shougo/neocomplete.vim'
+  " Python programming plugin
+  NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': ['python']}}
+  " Admin virtualenvs
+  NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': ['python']}}
+  " View indent lines
+  NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': ['python']}}
+  " View coverage reports from coverage.py
+  NeoBundleLazy 'alfredodeza/coveragepy.vim', {'autoload': {'filetypes': ['python']}}
+
+" }}}
+
+" Code snippets {{{
+
+  " Snippets admin
+  NeoBundle 'SirVer/ultisnips'
+
+" }}}
+
+" Syntax {{{
+
+  NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
+  NeoBundleLazy 'vim-scripts/crontab.vim', {'autoload': {'filetypes': ['crontab']}}
+  NeoBundle 'scrooloose/syntastic'
+
+" }}}
+
+" Open external links {{{
+
+  NeoBundle 'vim-scripts/utl.vim'
+
+" }}}
+
+" Text edition {{{
+
+  " Autocomplete de (, [, {, ', ", ...
+  NeoBundle 'kana/vim-smartinput'
+  " Dates change
+  NeoBundle 'tpope/vim-speeddating'
+  " Surround object between chars
+  NeoBundle 'tpope/vim-surround'
+  " Repeat some ops using 'dot'
+  NeoBundle 'tpope/vim-repeat'
+  " Comment and decomment lines
+  NeoBundle 'tpope/vim-commentary'
+  " Navigate undo tree
+  NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
+  " text-objects
+  NeoBundle 'kana/vim-textobj-entire' " ae, ie
+  NeoBundle 'kana/vim-textobj-indent' " ai, ii, aI, iI
+  NeoBundle 'kana/vim-textobj-lastpat' " a/, i/, a?, i?
+  NeoBundle 'kana/vim-textobj-line' " al, il
+  NeoBundle 'kana/vim-textobj-underscore' " a_, i_
+  NeoBundle 'kana/vim-textobj-user'
+  " Multicursor
+  NeoBundle 'terryma/vim-multiple-cursors'
+
+" }}}
+
+" HTML/CSS {{{
+
+  NeoBundleLazy 'othree/html5.vim', {'autoload':
+              \ {'filetypes': ['html', 'xhttml', 'css']}}
+" }}}
+
+" API Web {{{
+
+  NeoBundle 'mattn/webapi-vim'
+
+" }}}
+
+" FIN BUNDLES }}}
+
+"""" CONFIG OF VIM
 
 syntax on 
 filetype plugin indent on
-" Solarized
+
+" Theme
 colorscheme desert
 
-" For Ruby
-if has("autocmd") 
-  autocmd FileType ruby compiler rubyunit
-  autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-  autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-  autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-  autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-  autocmd FileType javascript set efm=%-P%f,
-        \%E%>\ #%n\ %m,%Z%.%#Line\ %l\\,\ Pos\ %c,
-        \%-G%f\ is\ OK.,%-Q
-endif
 
+" Only let the vim mode
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
@@ -91,102 +300,314 @@ inoremap <right> <nop>
 
 inoremap jj <ESC>
 
-nmap <leader>rci :%!ruby-code-indenter<cr> 
-" alt+n or alt+p to navigate between entries in QuickFix
-map <silent> <m-p> :cp <cr>
-map <silent> <m-n> :cn <cr>
+" Windows {{{
 
-" Change which file opens after executing :Rails command
-let g:rails_default_file='config/database.yml'
-" Next Tab
-nnoremap <silent> <C-Right> :tabnext<CR>
+  " New windows creation (vertical and horizontal)
+    nnoremap <Leader>v <C-w>v
+    nnoremap <Leader>h <C-w>s
 
-" Previous Tab
-nnoremap <silent> <C-Left> :tabprevious<CR>
+  " Change between windows
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
 
-" New Tab
-nnoremap <silent> <C-t> :tabnew<CR>
+  " Window close
+    nnoremap <Leader>k <C-w>c
+  " Buffer close
+    nnoremap <silent><Leader>B :bd<CR>
+" }}} 
+
+" Tabs {{{
+  " Move between tabs
+  nnoremap <silent> <C-Right> :tabnext<CR>
+  nnoremap <silent> <C-Left> :tabprevious<CR>
+
+  " Tab creation
+  nnoremap <silent> <C-t> :tabnew<CR>
+
+" }}}
+
+" Show no print chars {{{
+
+  nmap <Leader>eh :set list!<CR>
+  set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
+
+" }}}
+
+" Quick save {{{
+
+  nmap <silent> <Leader>w :update<CR>
+
+" }}}
+
+" Trim blank spaces for the current line {{{
+
+  nmap <silent><Leader>et :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+" }}}
+
+" Toggle the QuickFix window {{{
+
+  function! s:QuickfixToggle()
+      for i in range(1, winnr('$'))
+          let bnum = winbufnr(i)
+          if getbufvar(bnum, '&buftype') == 'quickfix'
+              cclose
+              lclose
+              return
+          endif
+      endfor
+      copen
+  endfunction
+  command! ToggleQuickfix call <SID>QuickfixToggle()
+
+  nnoremap <silent> <Leader>q :ToggleQuickfix<CR>
+" }}}
+
+" Shebang files with auto exec perms (#!) {{{
+
+  augroup shebang_chmod
+    autocmd!
+    autocmd BufNewFile  * let b:brand_new_file = 1
+    autocmd BufWritePost * unlet! b:brand_new_file
+    autocmd BufWritePre *
+          \ if exists('b:brand_new_file') |
+          \   if getline(1) =~ '^#!' |
+          \     let b:chmod_post = '+x' |
+          \   endif |
+          \ endif
+    autocmd BufWritePost,FileWritePost *
+          \ if exists('b:chmod_post') && executable('chmod') |
+          \   silent! execute '!chmod '.b:chmod_post.' "<afile>"' |
+          \   unlet b:chmod_post |
+          \ endif
+  augroup END
+
+" }}}
 
 " Edit vimrc \ev
-nnoremap <silent> ,ev :tabnew<CR>:e ~/.vimrc<CR>
+  nnoremap <silent> ,ev :tabnew<CR>:e ~/.vimrc<CR>
 
-" NERDTree
-let g:NERDTreeWinPos = "left" 
-let NERDTreeShowHidden = 1
-let NERDTreeShowBookmarks = 1
-nnoremap <silent> <F2> :NERDTreeToggle <CR>
+" PLUGINS
 
-" Up and down are more logical with g..
-nnoremap <silent> k gk
-nnoremap <silent> j gj
-inoremap <silent> <Up> <Esc>gka
-inoremap <silent> <Down> <Esc>gja
+" CTRLP {{{
+  
+  nnoremap <Leader>f :CtrlPMixed<CR>
 
-" Create Blank Newlines and stay in Normal mode
-nnoremap <silent> zj o<Esc>
-nnoremap <silent> zk O<Esc>
+" }}}
 
-" Space will toggle folds!
-nnoremap <space> za
+" Commentary {{{ -------------------------------------------------------------
 
-" Cambiamos de buffer
-nnoremap <silent> <C-L> :bn<CR>
-nnoremap <silent> <C-H> :bp<CR>
-nnoremap <silent> ,w :bd<CR>
+  nmap <Leader>c <Plug>CommentaryLine
+  xmap <Leader>c <Plug>Commentary
 
-" Command-T
-set wildignore+=*.o,*.obj,.git,*.pyc
-noremap <leader>j :CommandT<cr>
-noremap <leader>y :CommandTFlush<cr>
-let g:CommandTMaxDepth=8
-let g:CommandTMaxHeight=10
+  augroup plugin_commentary
+      au!
+      au FileType python setlocal commentstring=#%s
+      au FileType htmldjango setlocal commentstring={#\ %s\ #}
+      au FileType puppet setlocal commentstring=#\ %s
+  augroup END
 
-"Ruby
-nmap <Leader>a :cf /tmp/autotest.txt<CR> :compiler rubyunit<CR>
-imap <S-CR>    <CR><CR>end<Esc>-cc
-" Testing
-set completeopt=menu,preview
+" }}}
 
-" JS
-let $JS_CMD='node'
+" Neocomplete {{{
 
-" Python-mode
-" Activate rope
-" Keys:
-" K             Show python docs
-"   Rope autocomplete
-" g     Rope goto definition
-" d     Rope show documentation
-" f     Rope find occurrences
-" b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-" [[            Jump on previous class or function (normal, visual, operator modes)
-" ]]            Jump on next class or function (normal, visual, operator modes)
-" [M            Jump on previous class or method (normal, visual, operator modes)
-" ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 0
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_auto_select = 1
+  let g:neocomplete#enable_refresh_always = 1
+  let g:neocomplete#max_list = 30
+  let g:neocomplete#min_keyword_length = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 1
+  let g:neocomplete#data_directory = $HOME.'/.vim/tmp/neocomplete'
 
-" Documentation
-let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-"Linting
-let g:pymode_lint = 1
-let g:pymode_lint_checker = "pyflakes,pep8"
-" Auto check on save
-let g:pymode_lint_write = 1
+" }}}
 
-" Support virtualenv
-let g:pymode_virtualenv = 1
+" Powerline {{{ --------------------------------------------------------------
 
-" Enable breakpoints plugin
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_key = 'b'
+  let g:Powerline_symbols = 'fancy'
+  let g:Powerline_cache_file = $HOME.'/.vim/tmp/Powerline.cache'
 
-" syntax highlighting
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
+  set noshowmode
 
-" Don't autofold code
-let g:pymode_folding = 0
+" }}}
+
+" Ranger as file navigator {{{
+
+  fun! RangerChooser()
+      exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
+      if filereadable('/tmp/chosenfile')
+          exec 'edit ' . system('cat /tmp/chosenfile')
+          call system('rm /tmp/chosenfile')
+      endif
+      redraw!
+  endfun
+  map <Leader>x :call RangerChooser()<CR>
+
+" }}}
+
+" Fugitive {{{
+
+  nnoremap <Leader>gn :Unite output:echo\ system("git\ init")<CR>
+  nnoremap <Leader>gs :Gstatus<CR>
+  nnoremap <Leader>gw :Gwrite<CR>
+  nnoremap <Leader>go :Gread<CR>
+  nnoremap <Leader>gR :Gremove<CR>
+  nnoremap <Leader>gm :Gmove<Space>
+  nnoremap <Leader>gc :Gcommit<CR>
+  nnoremap <Leader>gd :Gdiff<CR>
+  nnoremap <Leader>gb :Gblame<CR>
+  nnoremap <Leader>gB :Gbrowse<CR>
+  nnoremap <Leader>gp :Git! push<CR>
+  nnoremap <Leader>gP :Git! pull<CR>
+  nnoremap <Leader>gi :Git!<Space>
+  nnoremap <Leader>ge :Gedit<CR>
+  nnoremap <Leader>gE :Gedit<Space>
+  nnoremap <Leader>gl :exe "silent Glog <Bar> Unite -no-quit
+              \ quickfix"<CR>:redraw!<CR>
+  nnoremap <Leader>gL :exe "silent Glog -- <Bar> Unite -no-quit
+              \ quickfix"<CR>:redraw!<CR>
+  nnoremap <Leader>gt :!tig<CR>:redraw!<CR>
+  nnoremap <Leader>gg :exe 'silent Ggrep -i '.input("Pattern: ")<Bar>Unite
+              \ quickfix -no-quit<CR>
+  nnoremap <Leader>ggm :exe 'silent Glog --grep='.input("Pattern: ").' <Bar>
+              \Unite -no-quit quickfix'<CR>
+  nnoremap <Leader>ggt :exe 'silent Glog -S='.input("Pattern: ").' <Bar>
+              \Unite -no-quit quickfix'<CR>
+
+  nnoremap <Leader>ggc :silent! Ggrep -i<Space>
+
+  " para el diffmode
+  noremap <Leader>du :diffupdate<CR>
+
+  if !exists(":Gdiffoff")
+      command Gdiffoff diffoff | q | Gedit
+  endif
+  noremap <Leader>dq :Gdiffoff<CR>
+
+" }}}
+
+" Gitv {{{
+
+  nnoremap <silent> <leader>gv :Gitv --all<CR>
+  nnoremap <silent> <leader>gV :Gitv! --all<CR>
+  vnoremap <silent> <leader>gV :Gitv! --all<CR>
+
+  let g:Gitv_OpenHorizontal = 'auto'
+  let g:Gitv_WipeAllOnClose = 1
+  let g:Gitv_DoNotMapCtrlKey = 1
+
+  autocmd FileType git set nofoldenable
+
+" }}}
+
+" PYTHON {{{
+
+  " PythonMode {{{
+
+    let g:pymode_breakpoint_key = '<Leader>B'
+
+    let g:pymode_lint_checker = 'pylint,pep8,mccabe,pep257'
+    let g:pymode_lint_ignore = ''
+    let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
+
+    let g:pymode_rope = 1
+    let g:pymode_rope_goto_def_newwin = 'new'
+    let g:pymode_rope_guess_project = 0
+    let g:pymode_rope_vim_completion = 1
+    let g:pymode_rope_always_show_complete_menu = 1
+
+  " }}}
+
+  " Syntastic {{{
+
+    let g:syntastic_python_pylint_exe = "pylint2"
+
+    let g:syntastic_error_symbol='✗'
+    let g:syntastic_warning_symbol='⚠'
+    let g:syntastic_style_error_symbol  = '⚡'
+    let g:syntastic_style_warning_symbol  = '⚡'
+
+  " }}}
+
+  " Virtualenv {{{
+
+    let g:virtualenv_auto_activate = 1
+    let g:virtualenv_stl_format = '(%n)'
+
+  " }}}
+
+" }}}
+
+" RVM {{{
+
+  set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
+  
+" }}}
+
+" TIPOS DE ARCHIVO  {{{ ======================================================
+
+  " Ruby {{{
+
+      autocmd FileType ruby compiler rubyunit
+      autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+      autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+      autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+      autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+
+  " }}}
+
+  " Javascript {{{
+
+      autocmd FileType javascript set efm=%-P%f,
+              \%E%>\ #%n\ %m,%Z%.%#Line\ %l\\,\ Pos\ %c,
+              \%-G%f\ is\ OK.,%-Q
+
+  " }}}
+
+  " DJANGO HTML (Templates) {{{
+
+      au BufRead,BufNewFile */templates/*.html setlocal filetype=htmldjango.html
+
+  " }}}
+
+  " JSON {{{
+
+    autocmd BufNewFile,BufRead *.json set ft=json
+
+    augroup json_autocmd
+      autocmd!
+      autocmd FileType json set autoindent
+      autocmd FileType json set formatoptions=tcq2l
+      autocmd FileType json set textwidth=78 shiftwidth=2
+      autocmd FileType json set softtabstop=2 tabstop=8
+      autocmd FileType json set expandtab
+      autocmd FileType json set foldmethod=syntax
+    augroup END
+
+  " }}}
+
+  " LUA {{{
+
+    au BufRead,BufNewFile rc.lua setlocal foldmethod=marker
+
+  " }}}
+
+  " MARKDOWN {{{
+
+    au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=markdown
+    autocmd FileType markdown NeoBundleSource vim-markdown
+    autocmd FileType markdown NeoBundleSource vim-markdown-extra-preview
+
+  " }}}
+
+" }}}

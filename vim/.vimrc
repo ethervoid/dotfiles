@@ -3,136 +3,6 @@ behave xterm          " Alternative is "mswin"
 
 set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 
-" Basic config {{{ -------------------------------------------------------
-
-  scriptencoding utf-8
-  set encoding=utf-8              " Encoding to UTF-8.
-  set ls=2                        " Status bar always visible
-  set go-=T                       " No tools.
-  set go-=m                       " No menu.
-  set go+=rRlLbh                  " Scroll bars enabled.
-  set go-=rRlLbh                  " Desactiva todas las barras de desplazamiento.
-  set cursorline                  " Cursor line highlighted.
-  set fillchars+=vert:│           " Mejora aspecto de la división de ventanas.
-  set ttyfast                     " Mejora el redibujado de la pantalla.
-  set title                       " Filename as title in the term.
-  set showcmd                     " Show incompleted commands.
-  set hidden                      " Hidden closed buffers.
-  set ruler                       " Show a permanent ruler.
-  set lazyredraw                  " Redraw in lazy mode.
-  set autoread                    " Update the changes out of vim.
-  set ttimeoutlen=0               " No delay while change modes
-  set backspace=indent,eol,start  " Backspace key behavior
-  set nu                          " Line numbers on
-  set cf                          " Enable error files & error jumping.
-
-" }}}
-
-" Search config {{{
-
-  set incsearch                   " Incremental search.
-  set showmatch                   " Show parenthesis match.
-  set hlsearch                    " Search results highlighted.
-  set smartcase                   " Smart case sensitive.
-  set ignorecase                  " No case sensitive while searching.
-
-" }}}
-
-" History and undo {{{
-
-  set history=1000
-  set undofile
-  set undoreload=1000
-
-" }}}
-
-" Wildmenu {{{ ---------------------------------------------------------------
-
-  set wildmenu                        " Commandline autocomple.
-  set wildmode=list:longest,full      " Show a list with all the options.
-
-  set wildignore+=.hg,.git,.svn                    " Version control
-  set wildignore+=*.sw?                            " Vim swap files
-  set wildignore+=*.bak,*.?~,*.??~,*.???~,*.~      " Backup files
-  set wildignore+=*.luac                           " Lua byte code
-  set wildignore+=*.jar                            " java archives
-  set wildignore+=*.pyc                            " Python byte code
-  set wildignore+=*.stats                          " Pylint stats
-
-" }}}
-
-" Tabs, spaces and wrapping {{{ -----------------------------------------
-
-  set expandtab                  " Emplea espacios en vez de tabulados.
-  set tabstop=4                  " Un Tabulado son cuatro espacios.
-  set shiftwidth=4               " Numero de espacios para autoindentado.
-  set softtabstop=4              " Un Tabulado de cuatro espacios.
-  set autoindent                 " Establece el autoindentado.
-  set textwidth=80
-  set colorcolumn=+1
-
-" }}}
-
-" Visual config {{{{
-
-  set showmatch  " Show matching brackets.
-  set mat=5  " Bracket blinking.
-  set list
-  set novisualbell  " No blinking .
-  set noerrorbells  " No noise.
-
-" }}}}
-
-" Esquema de color {{{
-
-  syntax on                      " Habilita el resaltado de sintaxis.
-  set background=dark            " Establece el fondo oscuro.
-  set t_Co=256                   " Habilita 256 colores en modo consola.
-  if has('gui_running')          " Habilita el tema molokai para gvim y vim.
-      colorscheme molokai
-  else
-      colorscheme molokai256
-  endif
-  set guifont=Monaco\ for\ Powerline
-  
-" }}}
-
-" gvim specific {{{
-  
-  set mousehide  " Hide mouse after chars typed
-  set mouse=a  " Mouse in all modes
-  set nohidden
-
-" }}}
-
-" Crear directorio si no existe previamente {{{
-
-  function! MakeDirIfNoExists(path)
-      if !isdirectory(expand(a:path))
-          call mkdir(expand(a:path), "p")
-      endif
-  endfunction
-
-" }}}
-
-" Backup config {{{ 
-
-  set backup
-  set nohidden
-  set backupdir=$HOME/.vim/tmp/backup/
-  set undodir=$HOME/.vim/tmp/undo/
-  set directory=$HOME/.vim/tmp/swap/
-  set viminfo+=n$HOME/.vim/tmp/viminfo
-
-  " If dirs doest not existe we have to create them
-  silent! call MakeDirIfNoExists(&undodir)
-  silent! call MakeDirIfNoExists(&backupdir)
-  silent! call MakeDirIfNoExists(&directory)
-
-" }}}
-
-let mapleader = ","
-
 " Autoinstall of NeoBundle {{{
 
   let iCanHazNeoBundle=1
@@ -197,10 +67,7 @@ NeoBundle 'Shougo/vimproc', {
 
   " Diff between dirs
   NeoBundleLazy 'joedicastro/DirDiff.vim', { 'autoload': { 'commands' : 'DirDiff'}}
-  " Hex edit
-  NeoBundleLazy 'vim-scripts/hexman.vim', { 'autoload' :
-              \ { 'mappings' : [['ni', '<Plug>HexManager']]}}
-
+  
 " }}}
 
 " Python {{{
@@ -220,7 +87,7 @@ NeoBundle 'Shougo/vimproc', {
 
 " Code snippets {{{
 
-  " Snippets admin
+  " Snippets manager
   NeoBundle 'SirVer/ultisnips'
 
 " }}}
@@ -279,26 +146,148 @@ NeoBundle 'Shougo/vimproc', {
 
 " FIN BUNDLES }}}
 
-"""" CONFIG OF VIM
+" Basic config {{{ ======================================================================
 
-syntax on 
-filetype plugin indent on
+  scriptencoding utf-8
+  set encoding=utf-8              " Encoding to UTF-8.
+  set ls=2                        " Status bar always visible
+  set go-=T                       " No tools.
+  set go-=m                       " No menu.
+  set go+=rRlLbh                  " Scroll bars enabled.
+  set go-=rRlLbh                  " Desactiva todas las barras de desplazamiento.
+  set cursorline                  " Cursor line highlighted.
+  hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white
+  set fillchars+=vert:│           " Mejora aspecto de la división de ventanas.
+  set ttyfast                     " Mejora el redibujado de la pantalla.
+  set title                       " Filename as title in the term.
+  set showcmd                     " Show incompleted commands.
+  set hidden                      " Hidden closed buffers.
+  set ruler                       " Show a permanent ruler.
+  set lazyredraw                  " Redraw in lazy mode.
+  set autoread                    " Update the changes out of vim.
+  set ttimeoutlen=0               " No delay while change modes
+  set backspace=indent,eol,start  " Backspace key behavior
+  set nu                          " Line numbers on
+  set cf                          " Enable error files & error jumping.
 
-" Theme
-colorscheme desert
+" }}}
 
+" Search config {{{
 
-" Only let the vim mode
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+  set incsearch                   " Incremental search.
+  set showmatch                   " Show parenthesis match.
+  set hlsearch                    " Search results highlighted.
+  set smartcase                   " Smart case sensitive.
+  set ignorecase                  " No case sensitive while searching.
 
-inoremap jj <ESC>
+" }}}
+
+" History and undo {{{
+
+  set history=1000
+  set undofile
+  set undoreload=1000
+
+" }}}
+
+" Wildmenu {{{
+
+  set wildmenu                        " Commandline autocomple.
+  set wildmode=list:longest,full      " Show a list with all the options.
+
+  set wildignore+=.hg,.git,.svn                    " Version control
+  set wildignore+=*.sw?                            " Vim swap files
+  set wildignore+=*.bak,*.?~,*.??~,*.???~,*.~      " Backup files
+  set wildignore+=*.luac                           " Lua byte code
+  set wildignore+=*.jar                            " java archives
+  set wildignore+=*.pyc                            " Python byte code
+  set wildignore+=*.stats                          " Pylint stats
+
+" }}}
+
+" Tabs, spaces and wrapping {{{ -----------------------------------------
+
+  set expandtab                  " Spaces instead of tab.
+  set tabstop=4                  " One tab -> 4 spaces.
+  set shiftwidth=4               " Number of spaces for autoindent.
+  set softtabstop=4              " Tab of 4 spaces.
+  set autoindent                 " Autoindent on.
+  set colorcolumn=+1
+" }}}
+
+" Visual config {{{{
+
+  set showmatch  " Show matching brackets.
+  set mat=5  " Bracket blinking.
+  set list
+  set novisualbell  " No blinking .
+  set noerrorbells  " No noise.
+
+" }}}}
+
+" Color, Font, Highlight {{{
+
+  syntax on                      " Habilita el resaltado de sintaxis.
+  set background=dark            " Establece el fondo oscuro.
+  set t_Co=256                   " Habilita 256 colores en modo consola.
+  if has('gui_running')          " Habilita el tema molokai para gvim y vim.
+      colorscheme molokai
+  else
+      colorscheme molokai256
+  endif
+  set guifont=Monaco\ for\ Powerline
+
+" }}}
+
+" gvim specific {{{
+  
+  set mousehide  " Hide mouse after chars typed
+  set mouse=a  " Mouse in all modes
+  set nohidden
+
+" }}}
+
+" Create dirs if they dont exists {{{
+
+  function! MakeDirIfNoExists(path)
+      if !isdirectory(expand(a:path))
+          call mkdir(expand(a:path), "p")
+      endif
+  endfunction
+
+" }}}
+
+" Backup config {{{ 
+
+  set backup
+  set nohidden
+  set backupdir=$HOME/.vim/tmp/backup/
+  set undodir=$HOME/.vim/tmp/undo/
+  set directory=$HOME/.vim/tmp/swap/
+  set viminfo+=n$HOME/.vim/tmp/viminfo
+
+  " Create dirs
+  silent! call MakeDirIfNoExists(&undodir)
+  silent! call MakeDirIfNoExists(&backupdir)
+  silent! call MakeDirIfNoExists(&directory)
+
+" }}}
+
+let mapleader = ","
+
+" Only let the vim mode {{{
+
+  nnoremap <up> <nop>
+  nnoremap <down> <nop>
+  nnoremap <left> <nop>
+  nnoremap <right> <nop>
+  inoremap <up> <nop>
+  inoremap <down> <nop>
+  inoremap <left> <nop>
+  inoremap <right> <nop>
+  inoremap jj <ESC>
+
+" }}}
 
 " Windows {{{
 
@@ -314,11 +303,14 @@ inoremap jj <ESC>
 
   " Window close
     nnoremap <Leader>k <C-w>c
+
   " Buffer close
     nnoremap <silent><Leader>B :bd<CR>
+
 " }}} 
 
 " Tabs {{{
+
   " Move between tabs
   nnoremap <silent> <C-Right> :tabnext<CR>
   nnoremap <silent> <C-Left> :tabprevious<CR>
@@ -363,6 +355,7 @@ inoremap jj <ESC>
   command! ToggleQuickfix call <SID>QuickfixToggle()
 
   nnoremap <silent> <Leader>q :ToggleQuickfix<CR>
+
 " }}}
 
 " Shebang files with auto exec perms (#!) {{{
@@ -520,7 +513,7 @@ inoremap jj <ESC>
     let g:pymode_lint_ignore = ''
     let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
 
-    let g:pymode_rope = 1
+    let g:pymode_rope = 0
     let g:pymode_rope_goto_def_newwin = 'new'
     let g:pymode_rope_guess_project = 0
     let g:pymode_rope_vim_completion = 1
@@ -531,7 +524,6 @@ inoremap jj <ESC>
   " Syntastic {{{
 
     let g:syntastic_python_pylint_exe = "pylint2"
-
     let g:syntastic_error_symbol='✗'
     let g:syntastic_warning_symbol='⚠'
     let g:syntastic_style_error_symbol  = '⚡'
@@ -557,7 +549,6 @@ inoremap jj <ESC>
 " TIPOS DE ARCHIVO  {{{ ======================================================
 
   " Ruby {{{
-
       autocmd FileType ruby compiler rubyunit
       autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
       autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1

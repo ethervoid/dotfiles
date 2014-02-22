@@ -1,0 +1,23 @@
+prompt_jarvis_setup () {
+
+  zstyle ':vcs_info:*' get-revision true
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' actionformats "[%s|%b|%a]"
+  zstyle ':vcs_info:*' formats "[%s|%b]" 
+  zstyle ':vcs_info:*' branchformat '%b-%r'
+  zstyle ':vcs_info:*' stagedstr '%F{yellow}●'
+  zstyle ':vcs_info:*' unstagedstr '%F{red}●'
+  zstyle ':vcs_info:git:*' formats       "%F{green}[%b %u%c%F{green}]"
+  zstyle ':vcs_info:git:*' actionformats "%F{green}[%b|%a %u%c%F{green}]"
+  zstyle ':vcs_info:*' enable git hg cvs svn
+
+# get vcs_info to collect informations
+  precmd() {
+      vcs_info
+  }
+  PROMPT='%F{green}[%n@%m]%F{white}[%T]
+%F{yellow}[%~/]${vcs_info_msg_0_} %F{yellow}> %F{white}%b%f'
+
+}
+
+prompt_jarvis_setup "$@"

@@ -188,6 +188,10 @@ NeoBundle 'Shougo/vimproc', {
   set undofile
   set undoreload=1000
 
+  if $TMUX == ''
+    set clipboard=unnamed
+  endif
+
 " }}}
 
 " Wildmenu {{{
@@ -213,6 +217,8 @@ NeoBundle 'Shougo/vimproc', {
   set softtabstop=4              " Tab of 4 spaces.
   set autoindent                 " Autoindent on.
   set colorcolumn=+1
+  set tags=./.tags,.tags;
+
 " }}}
 
 " Visual config {{{{
@@ -235,6 +241,7 @@ NeoBundle 'Shougo/vimproc', {
   else
       colorscheme molokai256
   endif
+  "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
   set guifont=Monaco\ for\ Powerline
 
 " }}}
@@ -286,6 +293,7 @@ let mapleader = ","
   inoremap <left> <nop>
   inoremap <right> <nop>
   inoremap jj <ESC>
+  inoremap kk <ESC>
 
 " }}}
 
@@ -301,11 +309,13 @@ let mapleader = ","
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
 
-  " Window close
-    nnoremap <Leader>k <C-w>c
+  " Change between buffers
+    nnoremap <silent><Leader>z :bn<CR>
+    nnoremap <silent><Leader>x :bp<CR>
+    nnoremap <silent><Leader>q :bd<CR>
 
-  " Buffer close
-    nnoremap <silent><Leader>B :bd<CR>
+  " Window close
+    nnoremap <Leader>Q <C-w>c
 
 " }}} 
 
@@ -320,10 +330,19 @@ let mapleader = ","
 
 " }}}
 
+" Copy and paste to clipboard {{{
+    vmap <C-x> :!pbcopy<CR>
+    vmap <C-c> :w !pbcopy<CR><CR>
+" }}}
+
 " Show no print chars {{{
 
   nmap <Leader>eh :set list!<CR>
   set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
+
+  " Max line number is 100
+  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  match OverLength /\%101v.\+/
 
 " }}}
 
@@ -338,6 +357,25 @@ let mapleader = ","
   nmap <silent><Leader>et :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " }}}
+
+" Change grep for silver searcher {{{
+if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
+" }}}
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" bind \ (backward slash) to grep shortcut
+command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " Toggle the QuickFix window {{{
 
@@ -354,7 +392,7 @@ let mapleader = ","
   endfunction
   command! ToggleQuickfix call <SID>QuickfixToggle()
 
-  nnoremap <silent> <Leader>q :ToggleQuickfix<CR>
+  nnoremap <silent> <Leader>k :ToggleQuickfix<CR>
 
 " }}}
 
@@ -386,7 +424,8 @@ let mapleader = ","
 
 " CTRLP {{{
   
-  nnoremap <Leader>f :CtrlPMixed<CR>
+  nnoremap <Leader>f :CtrlP<CR>
+  nnoremap <leader>t :CtrlPTag<CR>
 
 " }}}
 
@@ -398,6 +437,7 @@ let mapleader = ","
   augroup plugin_commentary
       au!
       au FileType python setlocal commentstring=#%s
+      au FileType php setlocal commentstring=#%s
       au FileType htmldjango setlocal commentstring={#\ %s\ #}
       au FileType puppet setlocal commentstring=#\ %s
   augroup END
@@ -418,6 +458,7 @@ let mapleader = ","
   " Enable omni completion.
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType php setlocal omnifunc=phpcomplete#CompleteTags
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -444,7 +485,7 @@ let mapleader = ","
       endif
       redraw!
   endfun
-  map <Leader>x :call RangerChooser()<CR>
+  map <Leader>F :call RangerChooser()<CR>
 
 " }}}
 
@@ -509,15 +550,18 @@ let mapleader = ","
 
     let g:pymode_breakpoint_key = '<Leader>B'
 
-    let g:pymode_lint_checker = 'pylint,pep8,mccabe,pep257'
+    let g:pymode_lint_checker = 'pylint,pep8'
     let g:pymode_lint_ignore = ''
     let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
 
-    let g:pymode_rope = 0
+    let g:pymode_rope = 1
     let g:pymode_rope_goto_def_newwin = 'new'
     let g:pymode_rope_guess_project = 0
     let g:pymode_rope_vim_completion = 1
     let g:pymode_rope_always_show_complete_menu = 1
+
+    let g:pymode_doc = 0
+    let g:pymode_folding = 0
 
   " }}}
 
@@ -602,3 +646,6 @@ let mapleader = ","
   " }}}
 
 " }}}
+
+
+

@@ -425,7 +425,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " CTRLP {{{
   
-  nnoremap <Leader>f :CtrlP<CR>
+  nnoremap <Leader>f :CtrlPMixed<CR>
   nnoremap <leader>t :CtrlPTag<CR>
 
 " }}}

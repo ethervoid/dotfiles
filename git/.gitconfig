@@ -1,0 +1,18 @@
+[branch]
+	autosetuprebase = always
+[user]
+	name = Mario de Frutos
+	email = mario@ticketea.com
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[push]
+	default = simple

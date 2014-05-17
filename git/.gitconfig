@@ -2,7 +2,7 @@
 	autosetuprebase = always
 [user]
 	name = Mario de Frutos
-	email = mario@ticketea.com
+	email = ethervoid@gmail.com
 [core]
 	editor = vim
 	whitespace = trailing-space

@@ -129,7 +129,7 @@ NeoBundle 'Shougo/vimproc', {
   NeoBundle 'kana/vim-textobj-underscore' " a_, i_
   NeoBundle 'kana/vim-textobj-user'
   " Multicursor
-  NeoBundle 'terryma/vim-multiple-cursors'
+  NeoBundle 'kris89/vim-multiple-cursors'
 
 " }}}
 

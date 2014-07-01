@@ -145,6 +145,12 @@ NeoBundle 'Shougo/vimproc', {
 
 " }}}
 
+" C Support {{{
+
+  NeoBundle 'vim-scripts/c.vim'
+
+" }}}
+
 " FIN BUNDLES }}}
 
 " Basic config {{{ ======================================================================

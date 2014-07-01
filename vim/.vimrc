@@ -441,6 +441,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
       au FileType php setlocal commentstring=#%s
       au FileType htmldjango setlocal commentstring={#\ %s\ #}
       au FileType puppet setlocal commentstring=#\ %s
+      au FileType yaml setlocal commentstring=#%s
   augroup END
 
 " }}}

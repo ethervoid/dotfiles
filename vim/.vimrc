@@ -72,16 +72,12 @@ NeoBundle 'Shougo/vimproc', {
 
 " Python {{{
 
-  " Autocomplete
-  NeoBundle 'Shougo/neocomplete.vim'
   " Python programming plugin
   NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': ['python']}}
   " Admin virtualenvs
   NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': ['python']}}
   " View indent lines
   NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': ['python']}}
-  " View coverage reports from coverage.py
-  NeoBundleLazy 'alfredodeza/coveragepy.vim', {'autoload': {'filetypes': ['python']}}
 
 " }}}
 
@@ -97,7 +93,7 @@ NeoBundle 'Shougo/vimproc', {
 
   NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
   NeoBundleLazy 'vim-scripts/crontab.vim', {'autoload': {'filetypes': ['crontab']}}
-  NeoBundle 'scrooloose/syntastic'
+  " NeoBundle 'scrooloose/syntastic'
 
 " }}}
 
@@ -109,8 +105,6 @@ NeoBundle 'Shougo/vimproc', {
 
 " Text edition {{{
 
-  " Autocomplete de (, [, {, ', ", ...
-  NeoBundle 'kana/vim-smartinput'
   " Dates change
   NeoBundle 'tpope/vim-speeddating'
   " Surround object between chars
@@ -122,12 +116,12 @@ NeoBundle 'Shougo/vimproc', {
   " Navigate undo tree
   NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
   " text-objects
-  NeoBundle 'kana/vim-textobj-entire' " ae, ie
-  NeoBundle 'kana/vim-textobj-indent' " ai, ii, aI, iI
-  NeoBundle 'kana/vim-textobj-lastpat' " a/, i/, a?, i?
-  NeoBundle 'kana/vim-textobj-line' " al, il
-  NeoBundle 'kana/vim-textobj-underscore' " a_, i_
-  NeoBundle 'kana/vim-textobj-user'
+  " NeoBundle 'kana/vim-textobj-entire' " ae, ie
+  " NeoBundle 'kana/vim-textobj-indent' " ai, ii, aI, iI
+  " NeoBundle 'kana/vim-textobj-lastpat' " a/, i/, a?, i?
+  " NeoBundle 'kana/vim-textobj-line' " al, il
+  " NeoBundle 'kana/vim-textobj-underscore' " a_, i_
+  " NeoBundle 'kana/vim-textobj-user'
   " Multicursor
   NeoBundle 'kris89/vim-multiple-cursors'
 
@@ -137,18 +131,6 @@ NeoBundle 'Shougo/vimproc', {
 
   NeoBundleLazy 'othree/html5.vim', {'autoload':
               \ {'filetypes': ['html', 'xhttml', 'css']}}
-" }}}
-
-" API Web {{{
-
-  NeoBundle 'mattn/webapi-vim'
-
-" }}}
-
-" C Support {{{
-
-  NeoBundle 'vim-scripts/c.vim'
-
 " }}}
 
 " FIN BUNDLES }}}
@@ -452,28 +434,6 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " }}}
 
-" Neocomplete {{{
-
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_auto_select = 1
-  let g:neocomplete#enable_refresh_always = 1
-  let g:neocomplete#max_list = 30
-  let g:neocomplete#min_keyword_length = 1
-  let g:neocomplete#sources#syntax#min_keyword_length = 1
-  let g:neocomplete#data_directory = $HOME.'/.vim/tmp/neocomplete'
-
-  " Enable omni completion.
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType php setlocal omnifunc=phpcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" }}}
-
 " Powerline {{{ --------------------------------------------------------------
 
   let g:Powerline_symbols = 'fancy'
@@ -558,8 +518,8 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
     let g:pymode_breakpoint_key = '<Leader>B'
 
-    let g:pymode_lint_checker = 'pylint,pep8'
-    let g:pymode_lint_ignore = ''
+    let g:pymode_lint_checker = 'pylint, pep8'
+    let g:pymode_lint_ignore = 'E501, W404'
     let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
 
     let g:pymode_rope = 0
@@ -570,16 +530,6 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
     let g:pymode_doc = 0
     let g:pymode_folding = 0
-
-  " }}}
-
-  " Syntastic {{{
-
-    let g:syntastic_python_pylint_exe = "pylint"
-    let g:syntastic_error_symbol='✗'
-    let g:syntastic_warning_symbol='⚠'
-    let g:syntastic_style_error_symbol  = '⚡'
-    let g:syntastic_style_warning_symbol  = '⚡'
 
   " }}}
 

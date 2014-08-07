@@ -174,7 +174,7 @@ NeoBundle 'Shougo/vimproc', {
   set autoread                    " Update the changes out of vim.
   set ttimeoutlen=0               " No delay while change modes
   set backspace=indent,eol,start  " Backspace key behavior
-  set nu                          " Line numbers on
+  " set nu                          " Line numbers on
   set cf                          " Enable error files & error jumping.
 
 " }}}
@@ -232,7 +232,7 @@ NeoBundle 'Shougo/vimproc', {
 
   set showmatch  " Show matching brackets.
   set mat=5  " Bracket blinking.
-  set list
+  " set list
   set novisualbell  " No blinking .
   set noerrorbells  " No noise.
 
@@ -562,7 +562,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
     let g:pymode_lint_ignore = ''
     let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
 
-    let g:pymode_rope = 1
+    let g:pymode_rope = 0
     let g:pymode_rope_goto_def_newwin = 'new'
     let g:pymode_rope_guess_project = 0
     let g:pymode_rope_vim_completion = 1
@@ -575,7 +575,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
   " Syntastic {{{
 
-    let g:syntastic_python_pylint_exe = "pylint2"
+    let g:syntastic_python_pylint_exe = "pylint"
     let g:syntastic_error_symbol='✗'
     let g:syntastic_warning_symbol='⚠'
     let g:syntastic_style_error_symbol  = '⚡'

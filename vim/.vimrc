@@ -57,7 +57,7 @@ NeoBundle 'Shougo/vimproc', {
 " Markdown {{{
 
   " Markdown syntax
-  NeoBundleLazy 'joedicastro/vim-markdown'
+  NeoBundleLazy 'plasticboy/vim-markdown'
   " Preview of markdown in browser
   NeoBundleLazy 'joedicastro/vim-markdown-extra-preview'
 
@@ -539,6 +539,12 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
     let g:virtualenv_stl_format = '(%n)'
 
   " }}}
+
+" }}}
+
+" MARKDOWN {{{
+
+    let g:vim_markdown_folding_disabled=1
 
 " }}}
 

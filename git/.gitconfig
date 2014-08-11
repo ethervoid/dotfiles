@@ -23,3 +23,6 @@
 	cmd = extMerge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
 	trustExitCode = false
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f

@@ -117,13 +117,6 @@ NeoBundle 'Shougo/vimproc', {
   NeoBundle 'tpope/vim-commentary'
   " Navigate undo tree
   NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
-  " text-objects
-  " NeoBundle 'kana/vim-textobj-entire' " ae, ie
-  " NeoBundle 'kana/vim-textobj-indent' " ai, ii, aI, iI
-  " NeoBundle 'kana/vim-textobj-lastpat' " a/, i/, a?, i?
-  " NeoBundle 'kana/vim-textobj-line' " al, il
-  " NeoBundle 'kana/vim-textobj-underscore' " a_, i_
-  " NeoBundle 'kana/vim-textobj-user'
   " Multicursor
   NeoBundle 'kris89/vim-multiple-cursors'
 

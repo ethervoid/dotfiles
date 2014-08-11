@@ -96,6 +96,8 @@ NeoBundle 'Shougo/vimproc', {
   " NeoBundle 'scrooloose/syntastic'
 
 " }}}
+"
+  NeoBundle 'kchmck/vim-coffee-script'
 
 " Open external links {{{
 

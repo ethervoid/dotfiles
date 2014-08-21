@@ -243,6 +243,15 @@ NeoBundle 'Shougo/vimproc', {
 
 " }}}
 
+" Trim unwanted spaces on save {{{
+    function! <SID>StripTrailingWhitespaces()
+        let l = line(".")
+        let c = col(".")
+        %s/\s\+$//e
+        call cursor(l, c)
+    endfunction
+" }}}
+
 " Backup config {{{ 
 
   set backup
@@ -545,6 +554,9 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 " }}}
 
 " TIPOS DE ARCHIVO  {{{ ======================================================
+
+    " Trim unwant spaces
+    autocmd FileType sh,php,javascript,json,python  :call <SID>StripTrailingWhitespaces()
 
   " Ruby {{{
       autocmd FileType ruby compiler rubyunit

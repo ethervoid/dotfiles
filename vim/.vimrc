@@ -171,10 +171,6 @@ NeoBundle 'Shougo/vimproc', {
   set undofile
   set undoreload=1000
 
-  if $TMUX == ''
-    set clipboard=unnamed
-  endif
-
 " }}}
 
 " Wildmenu {{{
@@ -313,9 +309,9 @@ let mapleader = ","
 
 " }}}
 
-" Copy and paste to clipboard {{{
-    vmap <C-x> :!pbcopy<CR>
-    vmap <C-c> :w !pbcopy<CR><CR>
+" Copy and paste to unnamed not the default clipboard {{{
+    map <leader>y "0y
+    map <leader>p "0p
 " }}}
 
 " Show no print chars {{{

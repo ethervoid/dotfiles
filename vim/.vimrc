@@ -83,7 +83,6 @@ NeoBundle 'Shougo/vimproc', {
 
 " Code snippets {{{
 
-  " Snippets manager
   NeoBundle 'SirVer/ultisnips'
   NeoBundle 'honza/vim-snippets'
 

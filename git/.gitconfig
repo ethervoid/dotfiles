@@ -6,6 +6,7 @@
 [core]
 	editor = vim
 	whitespace = trailing-space
+    symlinks = false
 [color]
 	ui = true
 [alias]

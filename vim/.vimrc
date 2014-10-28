@@ -3,131 +3,130 @@ behave xterm          " Alternative is "mswin"
 
 set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 
-" Autoinstall of NeoBundle {{{
+" NEOBUNDLE CONFIG START {{{
 
-  let iCanHazNeoBundle=1
-  let neobundle_readme=expand($HOME.'/.vim/bundle/neobundle.vim/README.md')
-  if !filereadable(neobundle_readme)
+    let iCanHazNeoBundle=1
+    let neobundle_readme=expand($HOME.'/.vim/bundle/neobundle.vim/README.md')
+    if !filereadable(neobundle_readme)
       echo "Installing NeoBundle.."
       echo ""
       silent !mkdir -p $HOME/.vim/bundle
       silent !git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
       let iCanHazNeoBundle=0
-  endif
+    endif
 
-  " Call NeoBundle
-  if has('vim_starting')
+    " Call NeoBundle
+    if has('vim_starting')
       set rtp+=$HOME/.vim/bundle/neobundle.vim/
-  endif
-  call neobundle#rc(expand($HOME.'/.vim/bundle/'))
+    endif
+    call neobundle#begin(expand($HOME.'/.vim/bundle/'))
 
-  NeoBundle 'Shougo/neobundle.vim'
+    NeoBundle 'Shougo/neobundle.vim'
 
-" }}}
 
-" BUNDLES (Install of plugins using NeoBundle) {{{
+    " Vimproc async commands (NeoBundle, Unite)
+    NeoBundle 'Shougo/vimproc', {
+          \ 'build' : {
+          \     'windows' : 'make -f make_mingw32.mak',
+          \     'cygwin' : 'make -f make_cygwin.mak',
+          \     'mac' : 'make -f make_mac.mak',
+          \     'unix' : 'make -f make_unix.mak',
+          \    },
+          \ }
+    " Filesystem {{{
 
-" Vimproc async commands (NeoBundle, Unite)
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
-" Filesystem {{{
-  
-  NeoBundle 'kien/ctrlp.vim'
+      NeoBundle 'kien/ctrlp.vim'
 
-" }}} 
+    " }}}
 
-" DCVS {{{
+    " DCVS {{{
 
-  " Git commands in vim
-  NeoBundle 'tpope/vim-fugitive'
-  " Diff of changes against git repo
-  NeoBundle 'airblade/vim-gitgutter'
-  " Git view
-  NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'],
-              \ 'autoload':{'commands':'Gitv'}}
+      " Git commands in vim
+      NeoBundle 'tpope/vim-fugitive'
+      " Diff of changes against git repo
+      NeoBundle 'airblade/vim-gitgutter'
+      " Git view
+      NeoBundleLazy 'gregsexton/gitv', {'depends':['tpope/vim-fugitive'],
+                  \ 'autoload':{'commands':'Gitv'}}
 
-" }}}
+    " }}}
 
-" Markdown {{{
+    " Markdown {{{
 
-  " Markdown syntax
-  NeoBundleLazy 'plasticboy/vim-markdown'
-  " Preview of markdown in browser
-  NeoBundleLazy 'joedicastro/vim-markdown-extra-preview'
+      " Markdown syntax
+      NeoBundleLazy 'plasticboy/vim-markdown'
+      " Preview of markdown in browser
+      NeoBundleLazy 'joedicastro/vim-markdown-extra-preview'
 
-" }}}
+    " }}}
 
-" Linux utils {{{
+    " Linux utils {{{
 
-  " Diff between dirs
-  NeoBundleLazy 'joedicastro/DirDiff.vim', { 'autoload': { 'commands' : 'DirDiff'}}
-  
-" }}}
+      " Diff between dirs
+      NeoBundleLazy 'joedicastro/DirDiff.vim', { 'autoload': { 'commands' : 'DirDiff'}}
 
-" Python {{{
+    " }}}
 
-  " Python programming plugin
-  NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': ['python']}}
-  " Admin virtualenvs
-  NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': ['python']}}
-  " View indent lines
-  NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': ['python']}}
+    " Python {{{
 
-" }}}
+      " Python programming plugin
+      NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': ['python']}}
+      " Admin virtualenvs
+      NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': ['python']}}
+      " View indent lines
+      NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': ['python']}}
 
-" Code snippets {{{
+    " }}}
 
-  NeoBundle 'SirVer/ultisnips'
-  NeoBundle 'honza/vim-snippets'
+    " Code snippets {{{
 
-" }}}
+      NeoBundle 'SirVer/ultisnips'
+      NeoBundle 'honza/vim-snippets'
 
-" Syntax {{{
+    " }}}
 
-  NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
-  NeoBundleLazy 'vim-scripts/crontab.vim', {'autoload': {'filetypes': ['crontab']}}
-  " NeoBundle 'scrooloose/syntastic'
+    " Syntax {{{
 
-" }}}
-"
-  NeoBundle 'kchmck/vim-coffee-script'
+      NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
+      NeoBundleLazy 'vim-scripts/crontab.vim', {'autoload': {'filetypes': ['crontab']}}
+      " NeoBundle 'scrooloose/syntastic'
 
-" Open external links {{{
+    " }}}
+    "
+      NeoBundle 'kchmck/vim-coffee-script'
 
-  NeoBundle 'vim-scripts/utl.vim'
+    " Open external links {{{
 
-" }}}
+      NeoBundle 'vim-scripts/utl.vim'
 
-" Text edition {{{
+    " }}}
 
-  " Dates change
-  NeoBundle 'tpope/vim-speeddating'
-  " Surround object between chars
-  NeoBundle 'tpope/vim-surround'
-  " Repeat some ops using 'dot'
-  NeoBundle 'tpope/vim-repeat'
-  " Comment and decomment lines
-  NeoBundle 'tpope/vim-commentary'
-  " Navigate undo tree
-  NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
-  " Multicursor
-  NeoBundle 'kris89/vim-multiple-cursors'
+    " Text edition {{{
 
-" }}}
+      " Dates change
+      NeoBundle 'tpope/vim-speeddating'
+      " Surround object between chars
+      NeoBundle 'tpope/vim-surround'
+      " Repeat some ops using 'dot'
+      NeoBundle 'tpope/vim-repeat'
+      " Comment and decomment lines
+      NeoBundle 'tpope/vim-commentary'
+      " Navigate undo tree
+      NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
+      " Multicursor
+      NeoBundle 'kris89/vim-multiple-cursors'
 
-" HTML/CSS {{{
+    " }}}
 
-  NeoBundleLazy 'othree/html5.vim', {'autoload':
-              \ {'filetypes': ['html', 'xhttml', 'css']}}
-" }}}
+    " HTML/CSS {{{
 
-" FIN BUNDLES }}}
+      NeoBundleLazy 'othree/html5.vim', {'autoload':
+                  \ {'filetypes': ['html', 'xhttml', 'css']}}
+    " }}}
+
+    call neobundle#end()
+
+" FIN NEOBUNDLE CONFIG }}}
 
 " Basic config {{{ ======================================================================
 
@@ -226,7 +225,7 @@ NeoBundle 'Shougo/vimproc', {
 " }}}
 
 " gvim specific {{{
-  
+
   set mousehide  " Hide mouse after chars typed
   set mouse=a  " Mouse in all modes
   set nohidden

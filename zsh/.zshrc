@@ -24,6 +24,13 @@ alias scala="sbt console"
 alias android_build="mvn clean install android:deploy android:run"
 alias android_run="mvn android:deploy android:run"
 
+#Suffix aliases
+alias -s py=vim
+alias -s js=vim
+alias -s php=vim
+alias -s log="tail -f"
+
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000

@@ -251,7 +251,7 @@ set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
     endfunction
 " }}}
 
-" Backup config {{{ 
+" Backup config {{{
 
   set backup
   set nohidden
@@ -304,7 +304,7 @@ let mapleader = ","
   " Window close
     nnoremap <Leader>Q <C-w>c
 
-" }}} 
+" }}}
 
 " Tabs {{{
 
@@ -410,7 +410,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 " PLUGINS
 
 " CTRLP {{{
-  
+
   nnoremap <Leader>f :CtrlPMixed<CR>
   nnoremap <leader>t :CtrlPTag<CR>
 
@@ -510,6 +510,13 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " }}}
 
+" GitGutter
+
+  nmap ,nh <Plug>GitGutterNextHunk
+  nmap ,ph <Plug>GitGutterPrevHunk
+
+" }}}
+
 " PYTHON {{{
 
   " PythonMode {{{
@@ -549,7 +556,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 " RVM {{{
 
   set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
-  
+
 " }}}
 
 " TIPOS DE ARCHIVO  {{{ ======================================================

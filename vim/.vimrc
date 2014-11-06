@@ -101,13 +101,9 @@ behave xterm          " Alternative is "mswin"
       NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
       " Multicursor
       NeoBundle 'kris89/vim-multiple-cursors'
+      " Yankstack
+      NeoBundle 'maxbrunsfeld/vim-yankstack'
 
-    " }}}
-
-    " HTML/CSS {{{
-
-      NeoBundleLazy 'othree/html5.vim', {'autoload':
-                  \ {'filetypes': ['html', 'xhttml', 'css']}}
     " }}}
 
     call neobundle#end()
@@ -304,8 +300,8 @@ let mapleader = ","
 " }}}
 
 " Copy and paste to unnamed not the default clipboard {{{
-    map <leader>y "0y
-    map <leader>p "0p
+    nmap <leader>p <Plug>yankstack_substitute_older_paste
+    nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " }}}
 
 " Show no print chars {{{

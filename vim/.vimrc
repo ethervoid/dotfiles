@@ -55,16 +55,9 @@ behave xterm          " Alternative is "mswin"
     " Markdown {{{
 
       " Markdown syntax
-      NeoBundleLazy 'plasticboy/vim-markdown'
+      NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload': {'filetypes': ['markdown']}}
       " Preview of markdown in browser
-      NeoBundleLazy 'joedicastro/vim-markdown-extra-preview'
-
-    " }}}
-
-    " Linux utils {{{
-
-      " Diff between dirs
-      NeoBundleLazy 'joedicastro/DirDiff.vim', { 'autoload': { 'commands' : 'DirDiff'}}
+      NeoBundleLazy 'joedicastro/vim-markdown-extra-preview',  {'autoload': {'filetypes': ['markdown']}}
 
     " }}}
 
@@ -89,18 +82,10 @@ behave xterm          " Alternative is "mswin"
     " Syntax {{{
 
       NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
-      NeoBundleLazy 'vim-scripts/crontab.vim', {'autoload': {'filetypes': ['crontab']}}
-      " NeoBundle 'scrooloose/syntastic'
 
     " }}}
     "
-      NeoBundle 'kchmck/vim-coffee-script'
-
-    " Open external links {{{
-
-      NeoBundle 'vim-scripts/utl.vim'
-
-    " }}}
+      NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffescript']}}
 
     " Text edition {{{
 

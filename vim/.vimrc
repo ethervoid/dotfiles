@@ -1,8 +1,6 @@
 set nocompatible      " Don't force vi compatibility
 behave xterm          " Alternative is "mswin"
 
-set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
-
 " NEOBUNDLE CONFIG START {{{
 
     let iCanHazNeoBundle=1
@@ -33,6 +31,9 @@ set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
           \     'unix' : 'make -f make_unix.mak',
           \    },
           \ }
+
+    NeoBundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+
     " Filesystem {{{
 
       NeoBundle 'kien/ctrlp.vim'

@@ -37,6 +37,7 @@ behave xterm          " Alternative is "mswin"
     " Filesystem {{{
 
       NeoBundle 'kien/ctrlp.vim'
+      NeoBundle 'haya14busa/incsearch.vim'
 
     " }}}
 
@@ -85,7 +86,7 @@ behave xterm          " Alternative is "mswin"
 
     " }}}
     "
-      NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffescript']}}
+      NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffee']}}
 
     " Text edition {{{
 
@@ -428,6 +429,20 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " }}}
 
+" Incsearch {{{
+    set hlsearch
+    let g:incsearch#auto_nohlsearch = 1
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+    map n  <Plug>(incsearch-nohl-n)
+    map N  <Plug>(incsearch-nohl-N)
+    map *  <Plug>(incsearch-nohl-*)
+    map #  <Plug>(incsearch-nohl-#)
+    map g* <Plug>(incsearch-nohl-g*)
+    map g# <Plug>(incsearch-nohl-g#)
+" }}}
+
 " Powerline {{{ --------------------------------------------------------------
 
   let g:Powerline_symbols = 'fancy'
@@ -519,8 +534,11 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
     let g:pymode_breakpoint_key = '<Leader>B'
 
+    let g:pymode_lint_options_pep8 = {
+            \ 'max_line_length': 120,
+            \ 'ignore': 'E128, E124, E501, W404'
+    \ }
     let g:pymode_lint_checker = 'pylint, pep8'
-    let g:pymode_lint_ignore = 'E501, W404'
     let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
 
     let g:pymode_rope = 0

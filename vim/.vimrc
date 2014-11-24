@@ -102,8 +102,8 @@ behave xterm          " Alternative is "mswin"
       NeoBundleLazy 'sjl/gundo.vim', { 'autoload' : {'commands': 'GundoToggle'}}
       " Multicursor
       NeoBundle 'kris89/vim-multiple-cursors'
-      " Yankstack
-      NeoBundle 'maxbrunsfeld/vim-yankstack'
+      " Yankring
+      NeoBundle 'vim-scripts/yankring.vim'
 
     " }}}
 
@@ -132,7 +132,7 @@ behave xterm          " Alternative is "mswin"
   set autoread                    " Update the changes out of vim.
   set ttimeoutlen=0               " No delay while change modes
   set backspace=indent,eol,start  " Backspace key behavior
-  " set nu                          " Line numbers on
+  set nu                          " Line numbers on
   set cf                          " Enable error files & error jumping.
 
 " }}}
@@ -315,8 +315,9 @@ let mapleader = ","
 " }}}
 
 " Copy and paste to unnamed not the default clipboard {{{
-    nmap <leader>p <Plug>yankstack_substitute_older_paste
-    nmap <leader>P <Plug>yankstack_substitute_newer_paste
+    let g:yankring_replace_n_pkey = ''
+    let g:yankring_replace_n_nkey = ''
+    nmap <leader>p :YRShow<CR>
 " }}}
 
 " Show no print chars {{{

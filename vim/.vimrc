@@ -56,21 +56,25 @@ behave xterm          " Alternative is "mswin"
     " Markdown {{{
 
       " Markdown syntax
-      NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload': {'filetypes': ['markdown']}}
+      NeoBundleLazy 'plasticboy/vim-markdown',  {'autoload': {'filetypes': 'markdown'}}
       " Preview of markdown in browser
-      NeoBundleLazy 'joedicastro/vim-markdown-extra-preview',  {'autoload': {'filetypes': ['markdown']}}
+      NeoBundleLazy 'joedicastro/vim-markdown-extra-preview',  {'autoload': {'filetypes': 'markdown'}}
 
     " }}}
 
     " Python {{{
 
       " Python programming plugin
-      NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': ['python']}}
+      NeoBundleLazy 'klen/python-mode', {'autoload': {'filetypes': 'python'}}
       " Admin virtualenvs
-      NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': ['python']}}
+      NeoBundleLazy 'jmcantrell/vim-virtualenv', {'autoload': {'filetypes': 'python'}}
       " View indent lines
-      NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': ['python']}}
+      NeoBundleLazy 'Yggdroot/indentLine', {'autoload': {'filetypes': 'python'}}
 
+    " }}}
+
+    " Go {{{
+        NeoBundleLazy 'fatih/vim-go', {'autoload': {'filetypes': 'go'}}
     " }}}
 
     " Code snippets {{{
@@ -83,10 +87,10 @@ behave xterm          " Alternative is "mswin"
     " Syntax {{{
 
       NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
+      NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffee']}}
+      NeoBundle 'chase/vim-ansible-yaml'
 
     " }}}
-    "
-      NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffee']}}
 
     " Text edition {{{
 
@@ -108,6 +112,8 @@ behave xterm          " Alternative is "mswin"
     " }}}
 
     call neobundle#end()
+
+    filetype plugin indent on
 
 " FIN NEOBUNDLE CONFIG }}}
 
@@ -202,7 +208,6 @@ behave xterm          " Alternative is "mswin"
   else
       colorscheme molokai256
   endif
-  "set guifont=DejaVu\ Sans\ Mono\ for\ Powerline
   set guifont=Monaco\ for\ Powerline
 
 " }}}
@@ -327,7 +332,7 @@ let mapleader = ","
 
   " Max line number is 100
   highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-  match OverLength /\%101v.\+/
+  match OverLength /\%101v.*/
 
 " }}}
 
@@ -423,9 +428,12 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
       au!
       au FileType python setlocal commentstring=#%s
       au FileType php setlocal commentstring=#%s
+      au FileType sh setlocal commentstring=#%s
+      au FileType ruby setlocal commentstring=#%s
       au FileType htmldjango setlocal commentstring={#\ %s\ #}
       au FileType puppet setlocal commentstring=#\ %s
       au FileType yaml setlocal commentstring=#%s
+      au FileType coffee setlocal commentstring=#%s
   augroup END
 
 " }}}
@@ -467,47 +475,6 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " }}}
 
-" Fugitive {{{
-
-  nnoremap <Leader>gn :Unite output:echo\ system("git\ init")<CR>
-  nnoremap <Leader>gs :Gstatus<CR>
-  nnoremap <Leader>gw :Gwrite<CR>
-  nnoremap <Leader>go :Gread<CR>
-  nnoremap <Leader>gR :Gremove<CR>
-  nnoremap <Leader>gm :Gmove<Space>
-  nnoremap <Leader>gc :Gcommit<CR>
-  nnoremap <Leader>gd :Gdiff<CR>
-  nnoremap <Leader>gb :Gblame<CR>
-  nnoremap <Leader>gB :Gbrowse<CR>
-  nnoremap <Leader>gp :Git! push<CR>
-  nnoremap <Leader>gP :Git! pull<CR>
-  nnoremap <Leader>gi :Git!<Space>
-  nnoremap <Leader>ge :Gedit<CR>
-  nnoremap <Leader>gE :Gedit<Space>
-  nnoremap <Leader>gl :exe "silent Glog <Bar> Unite -no-quit
-              \ quickfix"<CR>:redraw!<CR>
-  nnoremap <Leader>gL :exe "silent Glog -- <Bar> Unite -no-quit
-              \ quickfix"<CR>:redraw!<CR>
-  nnoremap <Leader>gt :!tig<CR>:redraw!<CR>
-  nnoremap <Leader>gg :exe 'silent Ggrep -i '.input("Pattern: ")<Bar>Unite
-              \ quickfix -no-quit<CR>
-  nnoremap <Leader>ggm :exe 'silent Glog --grep='.input("Pattern: ").' <Bar>
-              \Unite -no-quit quickfix'<CR>
-  nnoremap <Leader>ggt :exe 'silent Glog -S='.input("Pattern: ").' <Bar>
-              \Unite -no-quit quickfix'<CR>
-
-  nnoremap <Leader>ggc :silent! Ggrep -i<Space>
-
-  " para el diffmode
-  noremap <Leader>du :diffupdate<CR>
-
-  if !exists(":Gdiffoff")
-      command Gdiffoff diffoff | q | Gedit
-  endif
-  noremap <Leader>dq :Gdiffoff<CR>
-
-" }}}
-
 " Gitv {{{
 
   nnoremap <silent> <leader>gv :Gitv --all<CR>
@@ -536,7 +503,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
     let g:pymode_breakpoint_key = '<Leader>B'
 
     let g:pymode_lint_options_pep8 = {
-            \ 'max_line_length': 120,
+            \ 'max_line_length': 100,
             \ 'ignore': 'E128, E124, E501, W404'
     \ }
     let g:pymode_lint_checker = 'pylint, pep8'
@@ -562,6 +529,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " }}}
 
+
 " MARKDOWN {{{
 
     let g:vim_markdown_folding_disabled=1
@@ -577,7 +545,21 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 " TIPOS DE ARCHIVO  {{{ ======================================================
 
     " Trim unwant spaces
-    autocmd FileType sh,php,javascript,json,python  :call <SID>StripTrailingWhitespaces()
+    autocmd FileType sh,php,javascript,json,python,go :call <SID>StripTrailingWhitespaces()
+
+    " Go {{{
+        let g:go_fmt_fai_silently = 0
+        let g:go_fmt_command = "goimports"
+        let g:go_doc_keywordprg_enabled = 0
+        let g:go_highlight_functions = 1
+        let g:go_highlight_methods = 1
+        let g:go_highlight_structs = 1
+        au FileType go nmap <Leader>r <Plug>(go-run)
+        au FileType go nmap <Leader>gb <Plug>(go-build)
+        au FileType go nmap <Leader>gt <Plug>(go-test)
+        au FileType go nmap <Leader>gc <Plug>(go-coverage)
+
+    " }}}
 
   " Ruby {{{
       autocmd FileType ruby compiler rubyunit
@@ -599,6 +581,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
   " DJANGO HTML (Templates) {{{
 
       au BufRead,BufNewFile */templates/*.html setlocal filetype=htmldjango.html
+      au BufNewFile,BufRead *.jst set filetype=html
 
   " }}}
 

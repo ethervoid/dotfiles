@@ -1,5 +1,3 @@
-[branch]
-	autosetuprebase = always
 [user]
 	name = Mario de Frutos
 	email = ethervoid@gmail.com
@@ -15,7 +13,7 @@
     st = status
     br = branch
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --decorate --all --oneline
     diffca = diff --cached
     rb= reset HEAD~1
     wip= commit -m "WIP"
@@ -31,3 +29,5 @@
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
+[rerere]
+	enabled = true

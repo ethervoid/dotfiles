@@ -111,6 +111,12 @@ behave xterm          " Alternative is "mswin"
 
     " }}}
 
+    " Debug {{{
+
+      NeoBundle 'joonty/vdebug'
+
+    " }}}
+
     call neobundle#end()
 
     filetype plugin indent on
@@ -126,8 +132,8 @@ behave xterm          " Alternative is "mswin"
   set go-=m                       " No menu.
   set go+=rRlLbh                  " Scroll bars enabled.
   set go-=rRlLbh                  " Desactiva todas las barras de desplazamiento.
-  set cursorline                  " Cursor line highlighted.
-  hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white
+  " set cursorline                  " Cursor line highlighted.
+  " hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white
   set fillchars+=vert:│           " Mejora aspecto de la división de ventanas.
   set ttyfast                     " Mejora el redibujado de la pantalla.
   set title                       " Filename as title in the term.
@@ -286,8 +292,8 @@ let mapleader = ","
 
   " Change between buffers
     nnoremap <Leader>l :ls<CR>
-    nnoremap <Leader>x :bp<CR>
-    nnoremap <Leader>z :bn<CR>
+    nnoremap <Leader>x :bp!<CR>
+    nnoremap <Leader>z :bn!<CR>
     nnoremap <Leader>g :e#<CR>
     nnoremap <Leader>1 :1b<CR>
     nnoremap <Leader>2 :2b<CR>
@@ -311,8 +317,8 @@ let mapleader = ","
 " Tabs {{{
 
   " Move between tabs
-  nnoremap <silent> <C-Right> :tabnext<CR>
-  nnoremap <silent> <C-Left> :tabprevious<CR>
+  nnoremap <silent> <C-Up> :tabnext<CR>
+  nnoremap <silent> <C-Down> :tabprevious<CR>
 
   " Tab creation
   nnoremap <silent> <C-t> :tabnew<CR>
@@ -427,7 +433,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
   augroup plugin_commentary
       au!
       au FileType python setlocal commentstring=#%s
-      au FileType php setlocal commentstring=#%s
+      au FileType php setlocal commentstring=//%s
       au FileType sh setlocal commentstring=#%s
       au FileType ruby setlocal commentstring=#%s
       au FileType htmldjango setlocal commentstring={#\ %s\ #}
@@ -529,7 +535,6 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " }}}
 
-
 " MARKDOWN {{{
 
     let g:vim_markdown_folding_disabled=1
@@ -556,8 +561,10 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
         let g:go_highlight_structs = 1
         au FileType go nmap <Leader>r <Plug>(go-run)
         au FileType go nmap <Leader>gb <Plug>(go-build)
+        au FileType go nmap <Leader>gi <Plug>(go-install)
         au FileType go nmap <Leader>gt <Plug>(go-test)
         au FileType go nmap <Leader>gc <Plug>(go-coverage)
+        autocmd FileType go set nofoldenable
 
     " }}}
 

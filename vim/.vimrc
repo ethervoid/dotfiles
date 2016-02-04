@@ -38,6 +38,7 @@ behave xterm          " Alternative is "mswin"
 
       NeoBundle 'kien/ctrlp.vim'
       NeoBundle 'haya14busa/incsearch.vim'
+      NeoBundle 'moll/vim-bbye'
 
     " }}}
 
@@ -77,6 +78,10 @@ behave xterm          " Alternative is "mswin"
         NeoBundleLazy 'fatih/vim-go', {'autoload': {'filetypes': 'go'}}
     " }}}
 
+    " Ruby {{{
+        NeoBundleLazy 'tpope/vim-rails', {'autoload': {'filetypes': 'ruby'}}
+    " }}}
+
     " Code snippets {{{
 
       NeoBundle 'SirVer/ultisnips'
@@ -88,7 +93,8 @@ behave xterm          " Alternative is "mswin"
 
       NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
       NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffee']}}
-      NeoBundle 'chase/vim-ansible-yaml'
+      NeoBundle 'scrooloose/syntastic'
+      " NeoBundle 'chase/vim-ansible-yaml'
 
     " }}}
 
@@ -108,12 +114,6 @@ behave xterm          " Alternative is "mswin"
       NeoBundle 'kris89/vim-multiple-cursors'
       " Yankring
       NeoBundle 'vim-scripts/yankring.vim'
-
-    " }}}
-
-    " Debug {{{
-
-      NeoBundle 'joonty/vdebug'
 
     " }}}
 
@@ -185,9 +185,9 @@ behave xterm          " Alternative is "mswin"
 " Tabs, spaces and wrapping {{{ -----------------------------------------
 
   set expandtab                  " Spaces instead of tab.
-  set tabstop=4                  " One tab -> 4 spaces.
-  set shiftwidth=4               " Number of spaces for autoindent.
-  set softtabstop=4              " Tab of 4 spaces.
+  set tabstop=2                  " One tab -> 2 spaces.
+  set shiftwidth=2               " Number of spaces for autoindent.
+  set softtabstop=2              " Tab of 4 spaces.
   set autoindent                 " Autoindent on.
   set colorcolumn=+1
   set tags=./.tags,.tags;
@@ -307,7 +307,7 @@ let mapleader = ","
     nnoremap <Leader>0 :10b<CR>
     nnoremap <silent><Leader>z :bn<CR>
     nnoremap <silent><Leader>x :bp<CR>
-    nnoremap <silent><Leader>q :bd<CR>
+    nnoremap <silent><Leader>q :Bdelete<CR>
 
   " Window close
     nnoremap <Leader>Q <C-w>c
@@ -337,8 +337,8 @@ let mapleader = ","
   set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
 
   " Max line number is 100
-  highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-  match OverLength /\%101v.*/
+  highlight OverLength ctermbg=grey ctermfg=white guibg=#592929
+  match OverLength /\%121v.*/
 
 " }}}
 
@@ -508,10 +508,8 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
     let g:pymode_breakpoint_key = '<Leader>B'
 
-    let g:pymode_lint_options_pep8 = {
-            \ 'max_line_length': 100,
-            \ 'ignore': 'E128, E124, E501, W404'
-    \ }
+    let g:pymode_lint_ignore = "E124,E128,W"
+    let g:pymode_options_max_line_length = 120
     let g:pymode_lint_checker = 'pylint, pep8'
     let g:pymode_lint_config = $HOME.'/dotfiles/pylint/pylint.rc'
 
@@ -524,6 +522,9 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
     let g:pymode_doc = 0
     let g:pymode_folding = 0
 
+    let g:pymode_trim_whitespaces = 1
+
+    let g:pymode_indent = 1
   " }}}
 
   " Virtualenv {{{
@@ -545,6 +546,19 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
   set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{exists('g:loaded_rvm')?rvm#statusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
+" }}}
+
+" Syntastic {{{
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
+
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 0
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 1
+  let g:syntastic_aggregate_errors = 1
+  let g:syntastic_python_pylint_post_args="--max-line-length=120"
 " }}}
 
 " TIPOS DE ARCHIVO  {{{ ======================================================
@@ -574,6 +588,7 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
       autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
       autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
       autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+      autocmd FileType ruby,eruby set nofoldenable
 
   " }}}
 

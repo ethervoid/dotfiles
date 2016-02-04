@@ -1,0 +1,5 @@
+movtogif(){
+    ffmpeg -i "$1" -vf "scale=min(iw\,600):-1" -pix_fmt rgb24 -r 10 -f gif - |\
+        gifsicle --optimize=3 --delay=7 --colors 128 > "$2"
+
+}

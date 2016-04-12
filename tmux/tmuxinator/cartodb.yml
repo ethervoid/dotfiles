@@ -1,0 +1,25 @@
+# ~/.tmuxinator/cartodb.yml
+# you can make as many tabs as you wish...
+
+project_name: cartodb
+project_root: /home/ubuntu/www/production.cartodb.com/current
+tabs:
+  - ui: bundle exec rails s
+  - resque: bundle exec ./script/resque
+  - tiler_tis:
+      layout: main-horizontal
+      panes:
+        - cd /home/ubuntu/www/node-windshaft/current && node app.js development
+        - cd /home/ubuntu/www/tis/current && node app.js development 
+  - sql-api:
+      layout: main-horizontal
+      panes:
+        - cd /home/ubuntu/www/node-sql-api/current && node app.js development
+        - cd /home/ubuntu/www/node-sql-api/current && tail -f logs/*log
+  - central_ui: cd /home/ubuntu/www/admin.cartodb.com/current && bundle exec rails s
+  - central_resque: cd /home/ubuntu/www/admin.cartodb.com/current && bundle exec ./script/resque
+  - sql_console:
+      layout: fcd5,270x58,0,0{130x58,0,0,139x58,131,0}
+      panes:
+        - psql -U postgres -d carto_db_development
+        - bundle exec rails c

@@ -16,7 +16,7 @@ tabs:
       panes:
         - cd /home/ubuntu/www/node-sql-api/current && node app.js development
         - cd /home/ubuntu/www/node-sql-api/current && tail -f logs/*log
-  - central_ui: cd /home/ubuntu/www/admin.cartodb.com/current && bundle exec rails s
+  - central_ui: cd /home/ubuntu/www/admin.cartodb.com/current && bundle exec rails s -p 4000
   - central_resque: cd /home/ubuntu/www/admin.cartodb.com/current && bundle exec ./script/resque
   - sql_console:
       layout: fcd5,270x58,0,0{130x58,0,0,139x58,131,0}

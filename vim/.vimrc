@@ -16,6 +16,7 @@ behave xterm          " Alternative is "mswin"
     " Call NeoBundle
     if has('vim_starting')
       set rtp+=$HOME/.vim/bundle/neobundle.vim/
+      set rtp+=/usr/local/opt/fzf
     endif
     call neobundle#begin(expand($HOME.'/.vim/bundle/'))
 
@@ -36,7 +37,7 @@ behave xterm          " Alternative is "mswin"
 
     " Filesystem {{{
 
-      NeoBundle 'kien/ctrlp.vim'
+      NeoBundle 'junegunn/fzf.vim'
       NeoBundle 'haya14busa/incsearch.vim'
       NeoBundle 'moll/vim-bbye'
 
@@ -82,19 +83,12 @@ behave xterm          " Alternative is "mswin"
         NeoBundleLazy 'tpope/vim-rails', {'autoload': {'filetypes': 'ruby'}}
     " }}}
 
-    " Code snippets {{{
-
-      NeoBundle 'SirVer/ultisnips'
-      NeoBundle 'honza/vim-snippets'
-
-    " }}}
-
     " Syntax {{{
 
       NeoBundleLazy 'vim-scripts/JSON.vim', {'autoload': {'filetypes': ['json']}}
-      NeoBundleLazy 'kchmck/vim-coffee-script',  {'autoload': {'filetypes': ['coffee']}}
       NeoBundle 'scrooloose/syntastic'
-      " NeoBundle 'chase/vim-ansible-yaml'
+      NeoBundle 'sirver/UltiSnips'
+      NeoBundle 'honza/vim-snippets'
 
     " }}}
 
@@ -203,13 +197,6 @@ behave xterm          " Alternative is "mswin"
   set noerrorbells  " No noise.
 
 " }}}}
-
-" set vim to chdir for each file
- if exists('+autochdir')
-     set autochdir
- else
-     autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
- endif
 
 " Color, Font, Highlight {{{
 
@@ -365,12 +352,6 @@ let mapleader = ","
 if executable('ag')
     " Use ag over grep
     set grepprg=ag\ --nogroup\ --nocolor
-
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
 endif
 " }}}
 
@@ -425,10 +406,17 @@ nnoremap \ :Ag<SPACE> -i<SPACE>
 
 " PLUGINS
 
-" CTRLP {{{
+" FZF {{{
+  " Mapping selecting mappings
+  nnoremap <leader>f :Files<CR>
+  xmap <leader>f <plug>(fzf-maps-x)
+  omap <leader>f <plug>(fzf-maps-o)
 
-  nnoremap <Leader>f :CtrlPMixed<CR>
-  nnoremap <leader>t :CtrlPTag<CR>
+  " Insert mode completion
+  imap <c-x><c-k> <plug>(fzf-complete-word)
+  imap <c-x><c-f> <plug>(fzf-complete-path)
+  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+  imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " }}}
 

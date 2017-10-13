@@ -1,34 +1,36 @@
 # ~/.tmuxinator/cartodb.yml
 # you can make as many tabs as you wish...
-
 name: cartodb
 root: /home/ubuntu/www
 windows:
-  - ui: 
+  - ui:
       root: ~/www/production.cartodb.com/current
+      pre: rvm gemset use builder
       panes:
         - bundle exec rails s
   - resque:
       root: ~/www/production.cartodb.com/current
+      pre: rvm gemset use builder
       panes:
         - bundle exec ./script/resque
   - tiler:
       root: ~/www/node-windshaft/current
       panes:
-        - nvm use 0.10 && DEBUG=* node app.js development
+        - DEBUG=* node app.js development
   - tis:
       root: ~/www/tis/current
       panes:
-        - nvm use 0.10 && DEBUG=* node app.js development
+        - DEBUG=* node app.js development
   - sql-api:
       root: ~/www/node-sql-api/current
       layout: main-horizontal
       panes:
         - node app.js development
         - tail -f logs/*log
-  - central: 
+  - central:
       root: ~/www/admin.cartodb.com/current
       layout: layout 3f9d,272x61,0,0{140x61,0,0,5,131x61,141,0,8}
+      pre: rvm gemset use cartodb-central
       panes:
         - bundle exec rails s -p 4000
         - bundle exec ./script/resque
